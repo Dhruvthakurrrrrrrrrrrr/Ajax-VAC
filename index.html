@@ -1,0 +1,61 @@
+<h1 id="counter">counter</h1>
+<button onclick="getData()">getData</button>
+<div id="result"></div>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Avatar</th>
+
+        </tr>
+    </thead>
+    <tbody id="records">
+        
+    </tbody>
+
+<script>
+     cnt =0
+setInterval(()=>{
+    document.getElementById("counter").innerHTML=cnt++
+},1000)
+
+
+function getData()
+{
+    url=`https://reqres.in/api/users?page=1`
+
+    fetch(url)
+    .then(res => res.json())
+    .then(result =>
+    {
+        // console.log(result)
+        // console.log(result['data'])
+        // console.table(result['data'])
+        console.log(result['data'][0]['email'])
+
+        document.getElementById("result").innerHTML=result['data'][0]['email'] 
+        output=''
+            for(let i=0;i<6;i++)
+            {
+
+            output += 
+            `<tr>
+                <td>${result['data'][i]['id']}</td>
+                <td>${result['data'][i]['email']}</td>
+                <td>${result['data'][i]['first_name']}</td>
+                <td>${result['data'][i]['last_name']}</td>
+                <td><img src='${result['data'][i]['avatar']}'/></td>
+            
+            </tr>`
+            document.getElementById("records").innerHTML=output
+        }
+    })
+}
+
+
+
+
+</script>
